@@ -2,7 +2,6 @@ from celery import shared_task
 
 import logging
 
-from django.conf import settings
 from django.db import transaction
 
 from mailing.celery import app
@@ -12,7 +11,7 @@ log = logging.getLogger(__name__)
 
 
 @shared_task
-def send_mail_task(email_id, email_from=settings.EMAIL_FROM):
+def send_mail_task(email_id):
     """Celery task to send emails."""
     from mailing.models import Email
     task_id = send_mail_task.request.id
