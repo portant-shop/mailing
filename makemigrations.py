@@ -29,7 +29,7 @@ DEFAULT_SETTINGS = dict(
         "django.contrib.sites",
         "mailing",
     ],
-    EMAIL_FROM='mailing@example.com',
+    MAILING_EMAIL_FROM='mailing@example.com',
     SITE_ID=1,
 )
 

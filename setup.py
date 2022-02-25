@@ -44,7 +44,8 @@ setup(
     install_requires=[
         "celery>=5.2.3",
         "Django>=3.0",
-        "redis>=4.1.4"
+        "redis>=4.1.4",
+        "django-appconf"
     ],
     extras_require={
         "testing": tests_require,

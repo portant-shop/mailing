@@ -1,14 +1,15 @@
-from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from mailing.tasks import send_mail_task, task_delay_robust
+from mailing.conf import settings
+from mailing.tasks import task_delay_robust
 
 
 class EmailManager(models.Manager):
     def queue_email(
         self, subject, body, mail_to, html_body, cc=None, bcc=None,
-        attachment=None, auto_send=True, email_from=settings.EMAIL_FROM
+        attachment=None, auto_send=True, email_from=settings.MAILING_EMAIL_FROM,
+        taskargs=[]
     ):
         email = self.create(
             subject=subject, body=body, email_from=email_from,
@@ -17,7 +18,7 @@ class EmailManager(models.Manager):
             # If this code is running within transaction.atomic block, it should wait for
             # the txn to commit before delaying the task, otherwise inserted email may not be
             # available to the celery worker when it tries to access it.
-            task_delay_robust(send_mail_task, email.pk)
+            task_delay_robust(settings.MAILING_SEND_TASK, email.pk, *taskargs)
         return email
 
 

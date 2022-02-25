@@ -11,7 +11,7 @@ DATABASES = {
     }
 }
 
-EMAIL_FROM = 'mailing@example.com'
+MAILING_EMAIL_FROM = 'mailing@example.com'
 
 CELERY_TASK_ALWAYS_EAGER = True
 

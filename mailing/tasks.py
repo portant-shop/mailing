@@ -29,7 +29,7 @@ def task_delay_robust(task, *args):
         return task.delay(*args)
 
     delay_on_tx_commit = (
-        settings.CELERY_TASK_ALWAYS_EAGER is False and
+        getattr(settings, 'CELERY_TASK_ALWAYS_EAGER', False) is False and
         transaction.get_connection().in_atomic_block
     )
     if delay_on_tx_commit:
