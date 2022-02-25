@@ -2,9 +2,9 @@ from celery import shared_task
 
 import logging
 
+from django.conf import settings
 from django.db import transaction
 
-from mailing.celery import app
 from mailing.services import send_mail
 
 log = logging.getLogger(__name__)
@@ -29,7 +29,7 @@ def task_delay_robust(task, *args):
         return task.delay(*args)
 
     delay_on_tx_commit = (
-        app.conf.get('CELERY_ALWAYS_EAGER') is False and
+        settings.CELERY_TASK_ALWAYS_EAGER is False and
         transaction.get_connection().in_atomic_block
     )
     if delay_on_tx_commit:

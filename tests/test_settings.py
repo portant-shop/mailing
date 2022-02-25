@@ -1,7 +1,4 @@
-from mailing.celery import app
-
-
-app.conf.update(CELERY_ALWAYS_EAGER=True)
+from celery import Celery
 
 INSTALLED_APPS = [
     'mailing',
@@ -15,3 +12,12 @@ DATABASES = {
 }
 
 EMAIL_FROM = 'mailing@example.com'
+
+CELERY_TASK_ALWAYS_EAGER = True
+
+app = Celery('mailing')
+
+app.config_from_object('django.conf:settings', namespace='CELERY')
+app.autodiscover_tasks()
+
+print(app.conf.__dict__.keys())
