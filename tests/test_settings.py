@@ -19,5 +19,3 @@ app = Celery('mailing')
 
 app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
-
-print(app.conf.__dict__.keys())
