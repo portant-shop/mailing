@@ -23,6 +23,7 @@ class EmailManager(models.Manager):
 
 
 class Email(models.Model):
+    id = models.BigAutoField(primary_key=True)
     subject = models.CharField(max_length=255, verbose_name=_('Subject'))
     mail_to = models.EmailField(verbose_name=_('Mail To'))
     cc = models.TextField(null=True, verbose_name=_('cc'))
