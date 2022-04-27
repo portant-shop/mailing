@@ -14,9 +14,9 @@ from tests.mailing_factories import EmailFactory
 @pytest.fixture(autouse=True)
 def reset_email_whitelist():
     """Reset email_whitelist setting before and after each test."""
-    settings.EMAIL_WHITELIST = []
+    settings.MAILING_WHITELIST = []
     yield
-    settings.EMAIL_WHITELIST = []
+    settings.MAILING_WHITELIST = []
 
 
 @pytest.mark.django_db
@@ -42,7 +42,7 @@ def test_send_email():
 @pytest.mark.django_db
 def test_send_email_when_blocked():
     """Test send_email handles whitelist processing."""
-    settings.EMAIL_WHITELIST = ['*@portant.shop']
+    settings.MAILING_WHITELIST = ['*@portant.shop']
     mail_to = 'vedran@pinkdroids.com'
     cc = 'vedran@example.com'
     bcc = 'bcc@example.com'
@@ -101,7 +101,7 @@ def test_whitelist():
     )
 
     processed = process_whitelist(email)
-    assert len(settings.EMAIL_WHITELIST) == 0
+    assert len(settings.MAILING_WHITELIST) == 0
     assert processed.mail_to == mail_to
     assert processed.cc == cc
     assert processed.bcc == bcc
@@ -109,7 +109,7 @@ def test_whitelist():
     assert processed.start_send_at is None
     assert processed.sent_at is None
 
-    settings.EMAIL_WHITELIST = ['*@pinkdroids.com']
+    settings.MAILING_WHITELIST = ['*@pinkdroids.com']
     email = EmailFactory(
         mail_to=mail_to,
         cc=cc,
@@ -124,7 +124,7 @@ def test_whitelist():
     assert processed.start_send_at is None
     assert processed.sent_at is None
 
-    settings.EMAIL_WHITELIST = ['*@example.com']
+    settings.MAILING_WHITELIST = ['*@example.com']
     email = EmailFactory(
         mail_to=mail_to,
         cc=cc,
@@ -139,7 +139,7 @@ def test_whitelist():
     assert processed.start_send_at is None
     assert processed.sent_at is None
 
-    settings.EMAIL_WHITELIST = ['info@pinkdroids.com']
+    settings.MAILING_WHITELIST = ['info@pinkdroids.com']
     email = EmailFactory(
         mail_to=mail_to,
         cc=cc,
@@ -154,7 +154,7 @@ def test_whitelist():
     assert processed.start_send_at is not None
     assert processed.sent_at is not None
 
-    settings.EMAIL_WHITELIST = [mail_to]
+    settings.MAILING_WHITELIST = [mail_to]
     email = EmailFactory(
         mail_to=mail_to,
         cc=cc,
@@ -169,7 +169,7 @@ def test_whitelist():
     assert processed.start_send_at is None
     assert processed.sent_at is None
 
-    settings.EMAIL_WHITELIST = ['*@example.com']
+    settings.MAILING_WHITELIST = ['*@example.com']
     email = EmailFactory(
         mail_to=mail_to,
         cc=None,

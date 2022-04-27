@@ -10,10 +10,11 @@ def resolve(setting, **kwargs):
     return setting
 
 
-class WSPayAppConf(AppConf):
+class MailingAppConf(AppConf):
 
     EMAIL_FROM = ''
     SEND_TASK = 'mailing.tasks.send_mail_task'
+    WHITELIST = []
 
     class Meta:
         prefix = 'mailing'

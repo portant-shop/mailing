@@ -36,12 +36,12 @@ def send_mail(email) -> EmailMultiAlternatives:
 
 def _is_email_whitelisted(addr: Union[str, None]) -> bool:
     """
-    Check if email is contained within an EMAIL_WHITELIST setting.
+    Check if email is contained within an MAILING_WHITELIST setting.
 
     It will attempt to match an exact address or same domain match
     if the whitelisted address is listed as `*@domain.com`.
     """
-    whitelist: List[str] = settings.EMAIL_WHITELIST
+    whitelist: List[str] = settings.MAILING_WHITELIST
     if not addr:
         return False
     elif addr in whitelist:
@@ -62,7 +62,7 @@ def _is_email_whitelisted(addr: Union[str, None]) -> bool:
 
 def process_whitelist(email):
     """
-    Compare all recipients against the EMAIL_WHITELIST setting and alter instance if needed.
+    Compare all recipients against the MAILING_WHITELIST setting and alter instance if needed.
 
     Checks for each of mail_to, cc and bcc addresses
     - If the whitelist is empty or each recipient is whitelisted does not change any email
@@ -72,7 +72,7 @@ def process_whitelist(email):
     - If any recipient is valid, sends to all valid recipients.
     - If `mail_to` is not valid, sets a valid `cc` or `bcc` as `mail_to` .
     """
-    whitelist_empty = len(settings.EMAIL_WHITELIST) == 0
+    whitelist_empty = len(settings.MAILING_WHITELIST) == 0
     if email.sent_at or whitelist_empty:
         return email
 
