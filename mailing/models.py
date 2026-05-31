@@ -32,7 +32,7 @@ class Email(models.Model):
     body = models.TextField(verbose_name=_('Body'))
     html_body = models.TextField(verbose_name=_('HTML Body'))
     attachment = models.FileField(
-        upload_to='invoices/%Y/%m/%d',
+        upload_to='email_attachments/%Y/%m/%d',
         null=True,
         verbose_name=_('Attachment'))
     start_send_at = models.DateTimeField(null=True, blank=True, verbose_name=_('Start Send At'))
