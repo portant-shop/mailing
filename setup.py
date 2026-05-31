@@ -14,10 +14,7 @@ Django WSPay
 This django app provides simple support for payments using WSPay gateway.
 """
 
-tests_require = [
-    "pytest",
-    "pytest-django"
-]
+tests_require = ["pytest", "pytest-django"]
 
 setup(
     name=NAME,
@@ -25,8 +22,8 @@ setup(
     author_email=AUTHOR_EMAIL,
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
-    long_description_content_type='text/x-rst',
-    version="1.0.5",
+    long_description_content_type="text/x-rst",
+    version="1.0.8",
     license="MIT",
     url=URL,
     packages=find_packages(),
@@ -41,12 +38,7 @@ setup(
         "Framework :: Django",
     ],
     include_package_data=True,
-    install_requires=[
-        "celery>=5.2.3",
-        "Django>=3.0",
-        "redis>=4.1.4",
-        "django-appconf"
-    ],
+    install_requires=["celery>=5.2.3", "Django>=3.0", "redis>=4.1.4", "django-appconf"],
     extras_require={
         "testing": tests_require,
     },
